@@ -1,2 +1,5 @@
-# Teste-Pasquali
-Teste-Pasquali
+# Pasquali
+
+Iniciando Projeto !! 
+
+Preparando Git Flow 
