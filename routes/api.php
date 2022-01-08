@@ -24,5 +24,9 @@ Route::post('login-refresh', 'Auth\AuthenticateControllerLogin@refreshToken');
 Route::get('me', 'Auth\AuthenticateControllerLogin@getAuthenticatedUser');
 
 Route::apiResource('User', 'Api\UserController');
-Route::apiResource('Products', 'Api\ProductController');
+Route::apiResource('Colaborador', 'Api\ColaboradorApiController');
+
+Route::get('Colaborador/{id}/SearchCpf', 'Api\ColaboradorApiController@getsearchCpf');
+Route::post('Colaborador/{id}/vincularSalario', 'Api\ColaboradorApiController@vincularSalario');
+Route::get('Colaborador/{id}/salario', 'Api\ColaboradorApiController@salario');
 
