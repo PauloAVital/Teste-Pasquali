@@ -17,7 +17,7 @@ class Salario extends Model
     public function rules()
     {
         return [
-            'id_colaborador' => 'integer|required|unique:colaborador',
+            'id_colaborador' => 'integer|required',
             'salario' => 'required'
         ];
     }

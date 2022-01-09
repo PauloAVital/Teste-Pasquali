@@ -1,0 +1,317 @@
+{
+	"info": {
+		"_postman_id": "0c9917ab-3b2f-4a3b-8f18-47344e1a6315",
+		"name": "Teste-Pasquali",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "LISTA",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/Colaborador",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Colaborador"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PESQUISA",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/Colaborador/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Colaborador",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PESQUISA CPF",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/Colaborador/28128548891/SearchCpf",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Colaborador",
+						"28128548891",
+						"SearchCpf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ATUALIZAR",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Paulo Antonio Vital Update\",\n    \"email\": \"pauloavital1@gmail.com\",\n    \"cpf\": \"28128548890\",    \n    \"rg\": \"293847071\",\n    \"nascimento\": \"1979-06-17\",\n    \"cep\": 14708021,\n    \"endereco\": \"Antonio Agostinho Pupo\",\n    \"numero\": 311,\n    \"cidade\": \"Bebedouro\",\n    \"estado\": \"SP\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/Colaborador/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Colaborador",
+						"1"
+					]
+				},
+				"description": "Update"
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Paulo Antonio Vital\",\n    \"email\": \"pauloavital2@gmail.com\",\n    \"cpf\": \"28128548891\",    \n    \"rg\": \"293847071\",\n    \"nascimento\": \"1979-06-17\",\n    \"cep\": 14708021,\n    \"endereco\": \"Antonio Agostinho Pupo\",\n    \"numero\": 311,\n    \"cidade\": \"Bebedouro\",\n    \"estado\": \"SP\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/Colaborador",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Colaborador"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "8361",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "ROUPA MOLETOM COM CAPUZ MESCLA",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Insert"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETAR",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/Colaborador/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Colaborador",
+						"3"
+					]
+				},
+				"description": "DELETAR"
+			},
+			"response": []
+		},
+		{
+			"name": "COLABORADOR COM SALARIO",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/Colaborador/2/salario",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Colaborador",
+						"2",
+						"salario"
+					]
+				},
+				"description": "COLABORADOR COM SALARIO"
+			},
+			"response": []
+		},
+		{
+			"name": "VINCULAR SALARIO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"salario\": 15000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/Colaborador/2/vincularSalario",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Colaborador",
+						"2",
+						"vincularSalario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LISTA DE SALARIOS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/Salario",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Salario"
+					]
+				},
+				"description": "Lista de salarios"
+			},
+			"response": []
+		},
+		{
+			"name": "PESQUISA SALARIO",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/Salario/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Salario",
+						"2"
+					]
+				},
+				"description": "PESQUISA SALARIO"
+			},
+			"response": []
+		},
+		{
+			"name": "ATUALIZA SALARIO",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id_colaborador\": 2,\n    \"salario\": 22000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/Salario/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Salario",
+						"2"
+					]
+				},
+				"description": "Atualiza Salario"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETA SALARIO",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/Salario/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"Salario",
+						"5"
+					]
+				},
+				"description": "Deleta Salario"
+			},
+			"response": []
+		}
+	]
+}
