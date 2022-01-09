@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Colaborador;
 use App\Models\Salario;
-use Illuminate\Support\Facades\Validator;
 use Exception;
+use Illuminate\Support\Facades\Validator;
 
-class ColaboradorApiController extends Controller
+class SalarioApiController extends Controller
 {
     
     public function __construct(Colaborador $colaborador,
@@ -20,16 +20,16 @@ class ColaboradorApiController extends Controller
         $this->salario = $salario;
         $this->request = $Request;
     }
-    
+
     /**
-     * Traz a lista de colaboradores.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         try {
-            $data = $this->colaborador->all();
+            $data = $this->salario->all();
 
             if(!$data->isEmpty()) {
                 return response()->json($data);
@@ -43,20 +43,23 @@ class ColaboradorApiController extends Controller
     }
 
     /**
-     * Realiza o cadastro do colaborador.
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-  
     public function store(Request $request)
-    {   
+    {
         try {
             $dataForm =  $request->all();
-        
-            $retornoValida = $this->validarApi($dataForm);
+       
+            $retornoValida = $this->validarApiSalario($dataForm);
+
             if ($retornoValida != '') {
-                echo $retornoValida; 
+                echo $retornoValida;
             } else {
-                $data = $this->colaborador->create($dataForm);        
+
+                $data = $this->salario->create($dataForm);        
                 return response()->json($data, 200); 
             }
         } catch (Exception $e) {
@@ -65,7 +68,7 @@ class ColaboradorApiController extends Controller
     }
 
     /**
-     * Realiza a pesquisa de um colaborador especifico.
+     * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -73,7 +76,7 @@ class ColaboradorApiController extends Controller
     public function show($id)
     {
         try {
-            if (!$data = $this->colaborador->find($id)) {
+            if (!$data = $this->salario->find($id)) {
                 return response()->json(['error'=> 'Nada Encontrado', 404]);
             } else {
                 return response()->json($data);
@@ -84,7 +87,7 @@ class ColaboradorApiController extends Controller
     }
 
     /**
-     * Atualiza os dados do Colaborador
+     * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -93,11 +96,11 @@ class ColaboradorApiController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            if (!$data = $this->colaborador->find($id)){
+            if (!$data = $this->salario->find($id)){
                 return response()->json(['error'=> 'Nada Encontrado', 404]);
             } else {
                 $dataForm =  $request->all();
-                $retornoValida = $this->validarApi($dataForm, $id);
+                $retornoValida = $this->validarApiSalario($dataForm, $id);
     
                 if ($retornoValida != '') {
                     echo $retornoValida; 
@@ -112,7 +115,7 @@ class ColaboradorApiController extends Controller
     }
 
     /**
-     * Delete o Colaborador.
+     * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -120,7 +123,7 @@ class ColaboradorApiController extends Controller
     public function destroy($id)
     {
         try {
-            if (!$data = $this->colaborador->find($id)){
+            if (!$data = $this->salario->find($id)){
                 return response()->json(['error'=> 'Nada Encontrado', 404]);
             } else {
                 $data->delete();
@@ -132,70 +135,29 @@ class ColaboradorApiController extends Controller
         }
     }
 
-    /**
-     * Função que valida dados para cadastro de colaborador.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    private function validarApi($dataForm, $id = null) {        
-
+    public function vincularSalario(Request $request, $id) {
         try {
-            $messages = [
-                'cpf.required' => 'informe o cpf',
-                'cpf.integer' => 'cpf tem que conter apenas numeros',
-                'cpf.unique' => 'cpf duplicado',
-                'email.required' => 'informe o email',
-                'email.unique' => 'email duplicado',
-            ];
-    
-            $rules = [
-                'cpf' => 'required',
-                'email' => 'required'
-            ];
-    
-            $regras = ($id != null) ? $rules : $this->colaborador->rules();
-    
-            $validator = Validator::make($dataForm, $regras, $messages);
-    
-            if ($validator->fails()) {
-                return  response()->json([ 
-                            "valida" => false,
-                            "erros" => $validator->errors()
-                        ]);
-            }
-            return; 
-        } catch (Exception $e) {
-            return response()->json([
-                "valida" => false,
-                "erros" => $e->getMessage()]);
-        }      
-    }
-
-    /**
-     * Busca um colaborador especifico pelo CPF.
-     *
-     * @param  int  $cpf
-     * @return \Illuminate\Http\Response
-     */
-
-    public function getsearchCpf($cpf) {
-        try {
-            if (!$data = $this->colaborador::where('cpf', $cpf)->get(['*'])) {
+            if (!$data = $this->colaborador->find($id)){
                 return response()->json(['error'=> 'Nada Encontrado', 404]);
             } else {
-                return response()->json($data);
+                $dataForm = array(
+                    "id_colaborador" => $data->id,
+                    "salario" => $request->salario
+                );
+    
+                $retornoValida = $this->validarApiSalario($dataForm);
+    
+                if ($retornoValida != '') {
+                    echo $retornoValida;
+                } else {
+                    $data = $this->salario->create($dataForm);        
+                    return response()->json($data, 200); 
+                }
             }
         } catch (Exception $e) {
             return response()->json(['error'=> $e->getMessage(), 400]);
         }
     }
-
-    /**
-     * Busca um Colaborador especifico e traz histório de salario.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
     public function salario($id) {
         try {
@@ -207,5 +169,43 @@ class ColaboradorApiController extends Controller
         } catch (Exception $e) {
             return response()->json(['error'=> $e->getMessage(), 400]);
         }
+    }
+
+
+    /**
+     * Função que valida dados para cadastro de salario.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    private function validarApiSalario($dataForm, $id = null) {        
+        
+        try {
+            $messages = [
+                'id_colaborador.required' => 'informe o id do Colaborador',
+                'id_colaborador.integer' => 'id tem que conter apenas numeros',
+                'salario.required' => 'informe o salario',
+            ];
+    
+            $rules = [
+                'id_colaborador' => 'required|integer',
+                'salario' => 'required'
+            ];
+    
+            $regras = ($id != null) ? $rules : $this->salario->rules();
+    
+            $validator = Validator::make($dataForm, $regras, $messages);
+    
+            if ($validator->fails()) {
+                return  response()->json([ 
+                            "valida" => false,
+                            "erros" => $validator->errors()
+                        ]);
+            }
+            return;
+        } catch (Exception $e) {
+            return response()->json([
+                               "valida" => false,
+                               "erros" => $e->getMessage()]);
+        }       
     }
 }
